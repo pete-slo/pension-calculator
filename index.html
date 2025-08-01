@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pension Calculator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Pension Calculator</h1>
+  <form id="calc-form">
+    <label>Current Age: <input type="number" id="age" required></label><br>
+    <label>Retirement Age: <input type="number" id="retirementAge" required></label><br>
+    <label>Current Pension Fund (œ): <input type="number" id="fund" required></label><br>
+    <label>Annual Contribution (œ): <input type="number" id="contribution" required></label><br>
+    <label>Annual Contribution Growth Rate (%): <input type="number" step="0.1" id="growthRate" required></label><br>
+    <button type="submit">Calculate</button>
+  </form>
+
+  <div id="results"></div>
+  <script src="script.js"></script>
+</body>
+</html>

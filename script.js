@@ -1,48 +1,65 @@
-document.getElementById('calc-form').addEventListener('submit', function (e) {
+async function loadDrawdownTable() {
+  const response = await fetch('drawdown.csv');
+  const csvText = await response.text();
+  const rows = csvText.trim().split('\n').slice(1); // Skip header
+  const table = {};
+  rows.forEach(row => {
+    const [age, percentage, minimum] = row.split(',').map(v => v.trim());
+    table[parseInt(age)] = {
+      percentage: parseFloat(percentage),
+      minimum: parseFloat(minimum)
+    };
+  });
+  return table;
+}
+
+document.getElementById('calc-form').addEventListener('submit', async function (e) {
   e.preventDefault();
 
-  // Get input values
   const age = parseInt(document.getElementById('age').value);
   const retirementAge = parseInt(document.getElementById('retirementAge').value);
-  const fund = parseFloat(document.getElementById('fund').value);
-  const contribution = parseFloat(document.getElementById('contribution').value);
+  let fund = parseFloat(document.getElementById('fund').value);
+  let contribution = parseFloat(document.getElementById('contribution').value);
   const growthRate = parseFloat(document.getElementById('growthRate').value) / 100;
 
-  // Constants
   const lifeExpectancy = 90;
 
-  // Step 1: Accumulate pension to retirement
-  let currentFund = fund;
-  let annualContribution = contribution;
+  // Load drawdown rules from CSV
+  const drawdownTable = await loadDrawdownTable();
+
+  // Accumulation phase
   let accumulation = [];
-
-  for (let year = age; year < retirementAge; year++) {
-    accumulation.push({ year, fund: currentFund.toFixed(2), contribution: annualContribution.toFixed(2) });
-    currentFund += annualContribution;
-    annualContribution *= (1 + growthRate);
+  for (let yr = age; yr < retirementAge; yr++) {
+    accumulation.push({ age: yr, fund: fund.toFixed(2), contribution: contribution.toFixed(2) });
+    fund += contribution;
+    contribution *= (1 + growthRate);
   }
 
-  // Step 2: Calculate drawdown
-  const retirementYears = lifeExpectancy - retirementAge;
-  const annualDrawdown = currentFund / retirementYears;
+  // Drawdown phase
   let drawdown = [];
+  for (let yr = retirementAge; yr < lifeExpectancy; yr++) {
+    const rules = drawdownTable[yr];
+    if (!rules) break; // Stop if no rules for this age
 
-  for (let year = retirementAge; year < lifeExpectancy; year++) {
-    drawdown.push({ year, drawdown: annualDrawdown.toFixed(2) });
+    const pctAmount = fund * rules.percentage;
+    const amount = Math.max(pctAmount, rules.minimum);
+
+    drawdown.push({ age: yr, drawdown: amount.toFixed(2) });
+    fund -= amount;
+    if (fund <= 0) break;
   }
 
-  // Step 3: Display results
+  // Output results
   let output = "<h2>Results</h2>";
-
-  output += "<h3>Accumulation Phase</h3><table border='1'><tr><th>Age</th><th>Fund (œ)</th><th>Contribution (œ)</th></tr>";
+  output += "<h3>Accumulation Phase</h3><table border='1'><tr><th>Age</th><th>Fund (£)</th><th>Contribution (£)</th></tr>";
   accumulation.forEach(row => {
-    output += `<tr><td>${row.year}</td><td>${row.fund}</td><td>${row.contribution}</td></tr>`;
+    output += `<tr><td>${row.age}</td><td>${row.fund}</td><td>${row.contribution}</td></tr>`;
   });
   output += "</table>";
 
-  output += "<h3>Drawdown Phase</h3><table border='1'><tr><th>Age</th><th>Annual Drawdown (œ)</th></tr>";
+  output += "<h3>Drawdown Phase</h3><table border='1'><tr><th>Age</th><th>Annual Drawdown (£)</th></tr>";
   drawdown.forEach(row => {
-    output += `<tr><td>${row.year}</td><td>${row.drawdown}</td></tr>`;
+    output += `<tr><td>${row.age}</td><td>${row.drawdown}</td></tr>`;
   });
   output += "</table>";
 

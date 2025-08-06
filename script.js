@@ -14,32 +14,33 @@ async function loadDrawdownTable() {
   return table;
 }
 
-function addCustomIncrement(input, increment) {
-  // Handle keyboard arrow keys
-  input.addEventListener('keydown', function(e) {
+function addCustomStepSpinner(input, stepSize) {
+  // Keyboard arrow keys
+  input.addEventListener('keydown', function (e) {
+    const current = parseFloat(this.value) || 0;
     if (e.key === 'ArrowUp') {
       e.preventDefault();
-      this.value = (parseFloat(this.value) || 0) + increment;
+      this.value = current + stepSize;
     }
     if (e.key === 'ArrowDown') {
       e.preventDefault();
-      this.value = Math.max((parseFloat(this.value) || 0) - increment, 0);
+      this.value = Math.max(current - stepSize, 0);
     }
   });
 
-  // Handle mouse clicks on spinner arrows
-  input.addEventListener('input', function(e) {
-    // Ignore if user typed a value manually
-    if (this.matches(':focus')) return;
-    let current = parseFloat(this.value) || 0;
-    // Snap to nearest increment when spinner clicked
-    this.value = Math.round(current / increment) * increment;
+  // Spinner click (triggered as input event)
+  input.addEventListener('input', function () {
+    if (!this.matches(':focus')) {
+      const current = parseFloat(this.value) || 0;
+      const rounded = Math.round(current / stepSize) * stepSize;
+      this.value = rounded;
+    }
   });
 }
 
-// Apply to Fund (10,000) and Contribution (1,000)
-addCustomIncrement(document.getElementById('fund'), 10000);
-addCustomIncrement(document.getElementById('contribution'), 1000);
+addCustomStepSpinner(document.getElementById('fund'), 10000);
+addCustomStepSpinner(document.getElementById('contribution'), 1000);
+
 
 
 
@@ -179,13 +180,13 @@ accumulation.forEach(row => {
       guidanceMessage = "✅ Looking good! In your mid-eighties, the projection indicates that you may still have pension funds available for several years to come.";
     } else {
       guidanceClass = "warning";
-      guidanceMessage = "⚠️ The projection shows that your pension plan may be nearly depleted by your mid-eighties.";
+      guidanceMessage = "⚠️ Be careful. The projection shows that your pension plan may be depleted by your mid-eighties.";
     }
   }
   
 
 	output += "<h3>Drawdown Phase</h3>";
-  output += "<table class='drawdown-table' border='1'><tr><th class='year'>Year</th><th class='age'>Age</th><th class='balance'>Balance at Start (CI$)</th><th class='percentage' title='The maximum percentage of your pension fund that may be withdrawn at the age you reach this year.'>Max %</th><th class='drawdown'>Max Drawdown (CI$)</th><th class='growth'>Growth (CI$)</th></tr>";
+  output += "<table class='drawdown-table' border='1'><tr><th class='year'>Year</th><th class='age'>Age</th><th class='balance'>Balance at Start (CI$)</th><th class='percentage' title='The maximum percentage of your pension fund that may be withdrawn at the age you reach this year.'>Max %</th><th class='drawdown' title='The percentage of your pension fund, or the minimum annual amount ($15,400), whichever is greater.'>Annual Max (CI$)</th><th class='growth'>Growth (CI$)</th></tr>";
   drawdown.forEach(row => {
     if (row.note) {
       output += `<tr class="drawdown-note"><td colspan="6">${row.note}</td></tr>`;

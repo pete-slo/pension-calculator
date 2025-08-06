@@ -93,7 +93,7 @@ button[type="submit"]:hover {
 -------------------- */
 
 table {
-  width: 800px;              /* Fixed width for all tables */
+  width: 600px;              /* Fixed width for all tables */
   margin: 20px 0;            /* Top/bottom spacing, left aligned */
   border-collapse: collapse;
 }
@@ -144,7 +144,9 @@ table tr:nth-child(odd) {
 }
 
 
+
 /* --- TOP BAR --- */
+
 
 .top-bar {
   background-color: #000;
@@ -168,7 +170,10 @@ table tr:nth-child(odd) {
 }
 
 
+
 /* --- FORM CONTAINER --- */
+
+
 .form-container {
   background-color: #fafafa;
   border: 1px solid #ddd;
@@ -178,7 +183,11 @@ table tr:nth-child(odd) {
   margin-top: 20px;
 }
 
+
+
 /* Fade-in animation for results */
+
+
 #results {
   opacity: 0;
   transform: translateY(10px);
@@ -191,7 +200,10 @@ table tr:nth-child(odd) {
 }
 
 
+
 /* Consistent table column widths & alignment */
+
+
 .accumulation-table th.year,
 .accumulation-table td.year,
 .drawdown-table th.year,

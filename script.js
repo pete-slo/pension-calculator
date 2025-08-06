@@ -97,34 +97,38 @@ document.getElementById('calc-form').addEventListener('submit', async function (
 
 	let drawdown = [];
 	for (let yr = retirementAge; yr < lifeExpectancy; yr++) {
-	  const rules = drawdownTable[yr];
-	  if (!rules) break;
-	  if (fund <= 0) break;
-
-	  const startBalance = fund;
-	  const pctAmount = startBalance * rules.percentage;
-
-	  // Calculate allowed drawdown (capped at available funds)
-	  let amount = Math.max(pctAmount, rules.minimum);
-	  if (amount > startBalance) {
-		amount = startBalance; // final year, take remaining funds
-	  }
-
-	  const growth = roi * (startBalance - (amount / 2));
-
-	  drawdown.push({
-		year: (new Date().getFullYear() + (yr - age)),
-		age: yr,
-		balance: startBalance.toFixed(2),
-		percentage: (rules.percentage * 100).toFixed(2),
-		drawdown: amount.toFixed(2),
-		growth: growth.toFixed(2)
-	  });
-
-	  fund = startBalance - amount + growth;
-	}
-
-
+    const rules = drawdownTable[yr];
+    if (!rules) break;
+  
+    if (fund <= 0) break; // stop immediately if no funds remain
+  
+    const startBalance = fund;
+    const pctAmount = startBalance * rules.percentage;
+  
+    // Calculate allowed drawdown (capped at available funds)
+    let amount = Math.max(pctAmount, rules.minimum);
+    let growth = roi * (startBalance - (amount / 2));
+  
+    // If taking all remaining funds, no growth applies and stop afterwards
+    if (amount >= startBalance) {
+      amount = startBalance;
+      growth = 0;
+    }
+  
+    drawdown.push({
+      year: (new Date().getFullYear() + (yr - age)),
+      age: yr,
+      balance: startBalance.toFixed(2),
+      percentage: (rules.percentage * 100).toFixed(2),
+      drawdown: amount.toFixed(2),
+      growth: growth.toFixed(2)
+    });
+  
+    fund = startBalance - amount + growth;
+  
+    if (amount === startBalance) break; // final withdrawal year
+  }
+  
 
   // -----------------
   // Output results
@@ -152,7 +156,7 @@ document.getElementById('calc-form').addEventListener('submit', async function (
   // Drawdown table
   
 	output += "<h3>Drawdown Phase</h3>";
-	output += "<table border='1'><tr><th>Year</th><th>Age</th><th>Balance at Start (CI$)</th><th>%</th><th>Max Drawdown (CI$)</th><th>Growth (�)</th></tr>";
+	output += "<table border='1'><tr><th>Year</th><th>Age</th><th>Balance at Start (CI$)</th><th>%</th><th>Max Drawdown (CI$)</th><th>Growth (CI$)</th></tr>";
 	drawdown.forEach(row => {
 	  output += `<tr>
 		<td class="centered">${row.year}</td>

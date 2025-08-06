@@ -169,7 +169,11 @@ document.getElementById('calc-form').addEventListener('submit', async function (
 	});
 	output += "</table>";
 
-
-
   document.getElementById('results').innerHTML = output;
+
+  // Smooth scroll to results section
+  document.getElementById('results').scrollIntoView({
+    behavior: 'smooth'
+  });
+
 });

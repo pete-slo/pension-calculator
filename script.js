@@ -14,31 +14,33 @@ async function loadDrawdownTable() {
   return table;
 }
 
-// Custom arrow increment for Pension Fund
-const fundInput = document.getElementById('fund');
-fundInput.addEventListener('keydown', function(e) {
-  if (e.key === 'ArrowUp') {
-    e.preventDefault();
-    this.value = (parseFloat(this.value) || 0) + 10000;
-  }
-  if (e.key === 'ArrowDown') {
-    e.preventDefault();
-    this.value = Math.max((parseFloat(this.value) || 0) - 10000, 0);
-  }
-});
+function addCustomIncrement(input, increment) {
+  // Handle keyboard arrow keys
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      this.value = (parseFloat(this.value) || 0) + increment;
+    }
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      this.value = Math.max((parseFloat(this.value) || 0) - increment, 0);
+    }
+  });
 
-// Custom arrow increment for Annual Contribution
-const contributionInput = document.getElementById('contribution');
-contributionInput.addEventListener('keydown', function(e) {
-  if (e.key === 'ArrowUp') {
-    e.preventDefault();
-    this.value = (parseFloat(this.value) || 0) + 1000;
-  }
-  if (e.key === 'ArrowDown') {
-    e.preventDefault();
-    this.value = Math.max((parseFloat(this.value) || 0) - 1000, 0);
-  }
-});
+  // Handle mouse clicks on spinner arrows
+  input.addEventListener('input', function(e) {
+    // Ignore if user typed a value manually
+    if (this.matches(':focus')) return;
+    let current = parseFloat(this.value) || 0;
+    // Snap to nearest increment when spinner clicked
+    this.value = Math.round(current / increment) * increment;
+  });
+}
+
+// Apply to Fund (10,000) and Contribution (1,000)
+addCustomIncrement(document.getElementById('fund'), 10000);
+addCustomIncrement(document.getElementById('contribution'), 1000);
+
 
 
 document.getElementById('calc-form').addEventListener('submit', async function (e) {

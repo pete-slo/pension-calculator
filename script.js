@@ -35,17 +35,19 @@ document.getElementById('calc-form').addEventListener('submit', async function (
   // -----------------
   let accumulation = [];
   for (let yr = age; yr < retirementAge; yr++) {
-    // Calculate investment growth for the year (approximate average balance)
-    const growth = roi * (fund + contribution / 2);
-    accumulation.push({
-      age: yr,
-      fund: fund.toFixed(2),
-      contribution: contribution.toFixed(2),
-      growth: growth.toFixed(2)
-    });
-    fund += contribution + growth;
-    contribution *= (1 + growthRate);
+  // Calculate investment growth for the year (approximate average balance)
+  const growth = roi * (fund + contribution / 2);
+  accumulation.push({
+    year: (new Date().getFullYear() + (yr - age)), // <-- Calendar year
+    age: yr,
+    fund: fund.toFixed(2),
+    contribution: contribution.toFixed(2),
+    growth: growth.toFixed(2)
+  });
+  fund += contribution + growth;
+  contribution *= (1 + growthRate);
   }
+
 
   // -----------------
   // Drawdown phase
@@ -66,7 +68,7 @@ document.getElementById('calc-form').addEventListener('submit', async function (
     const growth = roi * (startBalance - (amount / 2));
 
     drawdown.push({
-      year: yearCount,
+      year: (new Date().getFullYear() + (yr - age)), // <-- Calendar year
       balance: startBalance.toFixed(2),
       age: yr,
       percentage: (rules.percentage * 100).toFixed(2),
@@ -89,6 +91,7 @@ document.getElementById('calc-form').addEventListener('submit', async function (
   output += "<table border='1'><tr><th>Age</th><th>Fund (£)</th><th>Contribution (£)</th><th>Growth (£)</th></tr>";
   accumulation.forEach(row => {
     output += `<tr>
+      <td>${row.year}</td>
       <td>${row.age}</td>
       <td>${Number(row.fund).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
       <td>${Number(row.contribution).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>

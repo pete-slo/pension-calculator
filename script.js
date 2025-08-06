@@ -146,6 +146,7 @@ document.getElementById('calc-form').addEventListener('submit', async function (
 
   // Accumulation table
 
+ 
 	output += "<h3>Accumulation Phase</h3>";
   output += "<table class='accumulation-table' border='1'><tr><th class='year'>Year</th><th class='age'>Age</th><th class='fund'>Fund (CI$)</th><th class='contribution'>Contribution (CI$)</th><th class='growth'>Growth (CI$)</th></tr>";
 accumulation.forEach(row => {
@@ -163,6 +164,26 @@ accumulation.forEach(row => {
 
   // Drawdown table
   
+  let guidanceMessage = "";
+  let guidanceClass = "";
+  
+  const drawdownAt85 = drawdown.find(row => row.age === 85);
+  
+  if (!drawdownAt85) {
+    guidanceClass = "alert";
+    guidanceMessage = "❌ Oh dear. The projection suggests your funds may run out too soon. Consider saving more, or planning to retire later.";
+  } else {
+    const remainingAt85 = parseFloat(drawdownAt85.balance);
+    if (remainingAt85 > 50000) {
+      guidanceClass = "good";
+      guidanceMessage = "✅ Looking good! In your mid-eighties, the projection indicates that you may still have pension funds available for several years to come.";
+    } else {
+      guidanceClass = "warning";
+      guidanceMessage = "⚠️ The projection shows that your pension plan may be nearly depleted by your mid-eighties.";
+    }
+  }
+  
+
 	output += "<h3>Drawdown Phase</h3>";
   output += "<table class='drawdown-table' border='1'><tr><th class='year'>Year</th><th class='age'>Age</th><th class='balance'>Balance at Start (CI$)</th><th class='percentage'>Max %</th><th class='drawdown'>Max Drawdown (CI$)</th><th class='growth'>Growth (CI$)</th></tr>";
   drawdown.forEach(row => {
@@ -179,7 +200,10 @@ accumulation.forEach(row => {
       </tr>`;
     }
   });
+
   output += "</table>";
+
+  output += `<div class="guidance ${guidanceClass}">${guidanceMessage}</div>`;
 
   const resultsDiv = document.getElementById('results');
 

@@ -255,3 +255,29 @@ tr.drawdown-note td {
   font-style: italic;
   text-align: center;
 }
+
+
+.guidance {
+  margin-top: 30px;
+  padding: 16px;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.guidance.good {
+  background-color: #e6f5e6;
+  color: #256029;
+  border: 2px solid #79c779;
+}
+
+.guidance.warning {
+  background-color: #fff9e6;
+  color: #8a6d00;
+  border: 2px solid #ffd66b;
+}
+
+.guidance.alert {
+  background-color: #ffe6e6;
+  color: #a94442;
+  border: 2px solid #f5a6a6;
+}

@@ -14,7 +14,7 @@
 		<!-- <img src="govky_white.png" alt="Cayman Islands Government Logo" class="gov-logo"> -->
 	</div>
 	</div>
-  
+  4
   <h1>Cayman Islands Pension Calculator</h1>
  
   <!-- FORM CONTAINER -->
@@ -25,7 +25,7 @@
 	  <div class="form-row">
 		<div class="form-field">
 		  <label for="age">Current Age</label>
-		  <input type="number" id="age" value="50" min="16" max="65" required>
+		  <input type="number" id="age" value="50" min="16" max="65" inputmode='decimal' required>
 		</div>
 		<div class="help-text">Your current age in years. (16 to 65) </div>
 	  </div>
@@ -33,7 +33,7 @@
 	  <div class="form-row">
 		<div class="form-field">
 		  <label for="fund">Current Pension Fund (CI$)</label>
-		  <input type="number" id="fund" value="100000" step="any" min="0" max="1000000" inputmode='decimal' required>
+		  <input type="number" id="fund" value="100000" step="1000" min="0" max="1000000" inputmode='decimal' required>
 		</div>
 		<div class="help-text">The current total value of your pension savings. (0 to 1,000,000)</div>
 	  </div>
@@ -41,7 +41,7 @@
 	  <div class="form-row">
 		<div class="form-field">
 		  <label for="roi">Return on Investment (%)</label>
-		  <input type="number" step="0.1" id="roi" value="4" min="0" max="15" required>
+		  <input type="number" step="0.1" id="roi" value="4" min="0" max="15" inputmode='decimal' required>
 		</div>
 		<div class="help-text">Expected annual investment return on your pension fund. (0 to 15)</div>
 	  </div>
@@ -49,7 +49,7 @@
 	  <div class="form-row">
 		<div class="form-field">
 		  <label for="retirementAge">Retirement Age</label>
-		  <input type="number" id="retirementAge" value="65" min="50" max="70" required>
+		  <input type="number" id="retirementAge" value="65" min="50" max="70" inputmode='decimal' required>
 		</div>
 		<div class="help-text">Retirement age can be 50 or higher. Normal retirement age is 65. (50 to 70)</div>
 	  </div>
@@ -65,7 +65,7 @@
 	  <div class="form-row">
 		<div class="form-field">
 		  <label for="growthRate">Contribution Growth (%)</label>
-		  <input type="number" step="0.1" id="growthRate" value="1" min="-3" max="3" required>
+		  <input type="number" step="0.1" id="growthRate" value="1" min="-3" max="3" inputmode='decimal' required>
 		</div>
 		<div class="help-text">How much you expect your salary to change on average each year. (-3% to +3%)</div>
 	  </div>
@@ -83,7 +83,6 @@
   
   <div id="results"></div>
   
-
 
   <script src="script.js"></script>
   <link rel="stylesheet" href="style.css">

@@ -169,11 +169,19 @@ document.getElementById('calc-form').addEventListener('submit', async function (
 	});
 	output += "</table>";
 
-  document.getElementById('results').innerHTML = output;
+  const resultsDiv = document.getElementById('results');
 
-  // Smooth scroll to results section
-  document.getElementById('results').scrollIntoView({
-    behavior: 'smooth'
+  // Set HTML and trigger fade-in
+  resultsDiv.innerHTML = output;
+  resultsDiv.classList.remove('fade-in'); // reset animation if re-calculating
+  void resultsDiv.offsetWidth; // reflow trick to restart animation
+  resultsDiv.classList.add('fade-in');
+  
+  // Smooth scroll to results
+  resultsDiv.scrollIntoView({
+    behavior: 'smooth',
+    block: 'start'
   });
+  
 
 });

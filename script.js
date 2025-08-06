@@ -165,17 +165,21 @@ accumulation.forEach(row => {
   
 	output += "<h3>Drawdown Phase</h3>";
   output += "<table class='drawdown-table' border='1'><tr><th class='year'>Year</th><th class='age'>Age</th><th class='balance'>Balance at Start (CI$)</th><th class='percentage'>Max %</th><th class='drawdown'>Max Drawdown (CI$)</th><th class='growth'>Growth (CI$)</th></tr>";
-drawdown.forEach(row => {
-	  output += `<tr>
-		<td class="year centered">${row.year}</td>
-    <td class="age centered">${row.age}</td>
-    <td class="balance">${Number(row.balance).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-    <td class="percentage">${row.percentage}</td>
-    <td class="drawdown">${Number(row.drawdown).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-    <td class="growth">${Number(row.growth).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-	  </tr>`;
-	});
-	output += "</table>";
+  drawdown.forEach(row => {
+    if (row.note) {
+      output += `<tr class="drawdown-note"><td colspan="6">${row.note}</td></tr>`;
+    } else {
+      output += `<tr>
+        <td class="year centered">${row.year}</td>
+        <td class="age centered">${row.age}</td>
+        <td class="balance">${Number(row.balance).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+        <td class="percentage">${row.percentage}</td>
+        <td class="drawdown">${Number(row.drawdown).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+        <td class="growth">${Number(row.growth).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+      </tr>`;
+    }
+  });
+  output += "</table>";
 
   const resultsDiv = document.getElementById('results');
 

@@ -258,11 +258,11 @@ tr.drawdown-note td {
 
 
 .guidance {
-  margin: 30px auto 0; /* top margin, center horizontally */
+  margin: 30px 0; /* top margin, center horizontally */
   padding: 16px;
   border-radius: 6px;
   font-weight: bold;
-  max-width: 800px;
+  max-width: 600px;
   width: 100%;
   box-sizing: border-box;
 }

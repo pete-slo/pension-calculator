@@ -139,14 +139,14 @@ document.getElementById('calc-form').addEventListener('submit', async function (
   // Accumulation table
 
 	output += "<h3>Accumulation Phase</h3>";
-	output += "<table border='1'><tr><th>Year</th><th>Age</th><th>Fund (CI$)</th><th>Contribution (CI$)</th><th>Growth (CI$)</th></tr>";
-	accumulation.forEach(row => {
+  output += "<table class='accumulation-table' border='1'><tr><th class='year'>Year</th><th class='age'>Age</th><th class='fund'>Fund (CI$)</th><th class='contribution'>Contribution (CI$)</th><th class='growth'>Growth (CI$)</th></tr>";
+accumulation.forEach(row => {
 	  output += `<tr>
-		<td class="centered">${row.year}</td>
-		<td class="centered">${row.age}</td>
-		<td>${Number(row.fund).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-		<td>${Number(row.contribution).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-		<td>${Number(row.growth).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+    <td class="year centered">${row.year}</td>
+    <td class="age centered">${row.age}</td>
+    <td class="fund">${Number(row.fund).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+    <td class="contribution">${Number(row.contribution).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+    <td class="growth">${Number(row.growth).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
 	  </tr>`;
 	});
 	output += "</table>";
@@ -156,15 +156,15 @@ document.getElementById('calc-form').addEventListener('submit', async function (
   // Drawdown table
   
 	output += "<h3>Drawdown Phase</h3>";
-	output += "<table border='1'><tr><th>Year</th><th>Age</th><th>Balance at Start (CI$)</th><th>%</th><th>Max Drawdown (CI$)</th><th>Growth (CI$)</th></tr>";
-	drawdown.forEach(row => {
+  output += "<table class='drawdown-table' border='1'><tr><th class='year'>Year</th><th class='age'>Age</th><th class='balance'>Balance at Start (CI$)</th><th>%</th><th class='drawdown'>Max Drawdown (CI$)</th><th class='growth'>Growth (CI$)</th></tr>";
+drawdown.forEach(row => {
 	  output += `<tr>
-		<td class="centered">${row.year}</td>
-		<td class="centered">${row.age}</td>
-		<td>${Number(row.balance).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-		<td>${row.percentage}</td>
-		<td>${Number(row.drawdown).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-		<td>${Number(row.growth).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+		<td class="year centered">${row.year}</td>
+    <td class="age centered">${row.age}</td>
+    <td class="balance">${Number(row.balance).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+    <td>${row.percentage}</td>
+    <td class="drawdown">${Number(row.drawdown).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+    <td class="growth">${Number(row.growth).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
 	  </tr>`;
 	});
 	output += "</table>";

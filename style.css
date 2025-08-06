@@ -190,3 +190,45 @@ table tr:nth-child(odd) {
   transform: translateY(0);
 }
 
+
+/* Consistent table column widths & alignment */
+.accumulation-table th.year,
+.accumulation-table td.year,
+.drawdown-table th.year,
+.drawdown-table td.year {
+  text-align: center;
+  width: 60px;
+}
+
+.accumulation-table th.age,
+.accumulation-table td.age,
+.drawdown-table th.age,
+.drawdown-table td.age {
+  text-align: center;
+  width: 60px;
+}
+
+.accumulation-table th.fund,
+.accumulation-table td.fund,
+.drawdown-table th.balance,
+.drawdown-table td.balance {
+  width: 120px; /* narrower fund/balance column */
+}
+
+.accumulation-table th.contribution,
+.accumulation-table td.contribution {
+  width: 100px;
+}
+
+.accumulation-table th.growth,
+.accumulation-table td.growth,
+.drawdown-table th.growth,
+.drawdown-table td.growth {
+  width: 100px;
+}
+
+.drawdown-table th.drawdown,
+.drawdown-table td.drawdown {
+  width: 120px;
+}
+

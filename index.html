@@ -7,20 +7,49 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Pension Calculator</h1>
-  <form id="calc-form">
-    <label>Current Age: <input type="number" id="age" required></label><br>
-	<label>Return on Investment (%): 
-	<input type="number" step="0.1" id="roi" value="4" required>
-	</label><br>
-    <label>Retirement Age: <input type="number" id="retirementAge" required></label><br>
-    <label>Current Pension Fund (œ): <input type="number" id="fund" required></label><br>
-    <label>Annual Contribution (œ): <input type="number" id="contribution" required></label><br>
-    <label>Annual Contribution Growth Rate (%): <input type="number" step="0.1" id="growthRate" required></label><br>
-    <button type="submit">Calculate</button>
-  </form>
+  <h1>Cayman Islands Pension Calculator</h1>
+	<form id="calc-form">
+	  <div class="form-group">
+		<label for="age">Current Age</label>
+		<input type="number" id="age" required>
+	  </div>
 
-  <div id="results"></div>
+	  <div class="form-group">
+		<label for="roi">Return on Investment (%)</label>
+		<input type="number" step="0.1" id="roi" value="4" required>
+		<div class="help-text">Expected annual investment return on your pension fund.</div>
+	  </div>
+
+	  <div class="form-group">
+		<label for="retirementAge">Retirement Age</label>
+		<input type="number" id="retirementAge" required>
+		<div class="help-text">Retirement age can be 55 or higher. Normal retirement age is 65.</div>
+	  </div>
+
+	  <div class="form-group">
+		<label for="fund">Current Pension Fund (£)</label>
+		<input type="number" id="fund" required>
+	  </div>
+
+	  <div class="form-group">
+		<label for="contribution">Annual Contribution (£)</label>
+		<input type="number" id="contribution" required>
+		<div class="help-text">Your annual contribution is normally 10% of your earnings.</div>
+	  </div>
+
+	  <div class="form-group">
+		<label for="growthRate">Annual Contribution Growth Rate (%)</label>
+		<input type="number" step="0.1" id="growthRate" required>
+		<div class="help-text">Annual contribution growth is how much you expect your salary to increase on average over the years.</div>
+	  </div>
+
+	  <button type="submit">Calculate</button>
+	</form>
+
+	<hr class="divider">
+
+	<div id="results"></div>
+
   <script src="script.js"></script>
   <link rel="stylesheet" href="style.css">
 </body>

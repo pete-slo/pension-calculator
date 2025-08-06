@@ -26,15 +26,6 @@ form {
   padding: 10px 0;       /* space inside each row */
 }
 
-/* Alternating background colours */
-.form-row:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-.form-row:nth-child(odd) {
-  background-color: #ffffff;
-}
-
 .form-field label {
   font-size: 0.9em; /* slightly smaller */
   font-weight: bold;

@@ -123,11 +123,13 @@ document.getElementById('calc-form').addEventListener('submit', async function (
       drawdown: amount.toFixed(2),
       growth: growth.toFixed(2)
     });
-  
-    fund = startBalance - amount + growth;
-  
-    if (amount === startBalance) break; // final withdrawal year
-  }
+    
+    // Insert special note row at age 89 if funds remain
+    if (yr === 89 && fund > 0) {
+      drawdown.push({
+        note: "At age 89, you may take the remaining balance as a lump sum."
+      });
+    }
   
 
   // -----------------

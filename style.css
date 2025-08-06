@@ -55,3 +55,23 @@ table tr:nth-child(even) {
 table tr:nth-child(odd) {
   background-color: #ffffff;
 }
+
+table {
+  width: 800px;              /* Fixed sensible width */
+  margin: 20px auto;         /* Center table horizontally */
+  border-collapse: collapse;
+}
+
+table th, table td {
+  padding: 6px 8px;
+  text-align: right;
+}
+
+table th {
+  background-color: #005A9C;
+  color: white;
+}
+
+table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}

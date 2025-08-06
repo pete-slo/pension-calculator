@@ -52,34 +52,37 @@ document.getElementById('calc-form').addEventListener('submit', async function (
   // -----------------
   // Drawdown phase
   // -----------------
-  let drawdown = [];
-  let yearCount = 1;
 
-  for (let yr = retirementAge; yr < lifeExpectancy; yr++) {
-    const rules = drawdownTable[yr];
-    if (!rules) break; // No rules for this age
-    if (fund <= 0) break; // Funds exhausted
+	let drawdown = [];
+	for (let yr = retirementAge; yr < lifeExpectancy; yr++) {
+	  const rules = drawdownTable[yr];
+	  if (!rules) break;
+	  if (fund <= 0) break;
 
-    const startBalance = fund;
-    const pctAmount = startBalance * rules.percentage;
-    const amount = Math.max(pctAmount, rules.minimum);
+	  const startBalance = fund;
+	  const pctAmount = startBalance * rules.percentage;
 
-    // Calculate investment growth (average balance during year)
-    const growth = roi * (startBalance - (amount / 2));
+	  // Calculate allowed drawdown (capped at available funds)
+	  let amount = Math.max(pctAmount, rules.minimum);
+	  if (amount > startBalance) {
+		amount = startBalance; // final year, take remaining funds
+	  }
 
-    drawdown.push({
-      year: (new Date().getFullYear() + (yr - age)), // <-- Calendar year
-      balance: startBalance.toFixed(2),
-      age: yr,
-      percentage: (rules.percentage * 100).toFixed(2),
-      drawdown: amount.toFixed(2),
-      growth: growth.toFixed(2)
-    });
+	  const growth = roi * (startBalance - (amount / 2));
 
-    // Update fund for next year
-    fund = startBalance - amount + growth;
-    yearCount++;
-  }
+	  drawdown.push({
+		year: (new Date().getFullYear() + (yr - age)),
+		age: yr,
+		balance: startBalance.toFixed(2),
+		percentage: (rules.percentage * 100).toFixed(2),
+		drawdown: amount.toFixed(2),
+		growth: growth.toFixed(2)
+	  });
+
+	  fund = startBalance - amount + growth;
+	}
+
+
 
   // -----------------
   // Output results
@@ -102,19 +105,21 @@ document.getElementById('calc-form').addEventListener('submit', async function (
 
 
   // Drawdown table
-  output += "<h3>Drawdown Phase</h3>";
-  output += "<table border='1'><tr><th>Year</th><th>Balance at Start (£)</th><th>Age</th><th>%</th><th>Max Drawdown (£)</th><th>Growth (£)</th></tr>";
-  drawdown.forEach(row => {
-    output += `<tr>
-      <td>${row.year}</td>
-      <td>${Number(row.balance).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-      <td>${row.age}</td>
-      <td>${row.percentage}</td>
-      <td>${Number(row.drawdown).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-      <td>${Number(row.growth).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-    </tr>`;
-  });
-  output += "</table>";
+  
+	output += "<h3>Drawdown Phase</h3>";
+	output += "<table border='1'><tr><th>Year</th><th>Age</th><th>Balance at Start (£)</th><th>%</th><th>Max Drawdown (£)</th><th>Growth (£)</th></tr>";
+	drawdown.forEach(row => {
+	  output += `<tr>
+		<td>${row.year}</td>
+		<td>${row.age}</td>
+		<td>${Number(row.balance).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+		<td>${row.percentage}</td>
+		<td>${Number(row.drawdown).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+		<td>${Number(row.growth).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+	  </tr>`;
+	});
+	output += "</table>";
+
 
   document.getElementById('results').innerHTML = output;
 });

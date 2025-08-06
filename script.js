@@ -87,18 +87,19 @@ document.getElementById('calc-form').addEventListener('submit', async function (
   let output = "<h2>Results</h2>";
 
   // Accumulation table
-  output += "<h3>Accumulation Phase</h3>";
-  output += "<table border='1'><tr><th>Age</th><th>Fund (£)</th><th>Contribution (£)</th><th>Growth (£)</th></tr>";
-  accumulation.forEach(row => {
-    output += `<tr>
-      <td>${row.year}</td>
-      <td>${row.age}</td>
-      <td>${Number(row.fund).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-      <td>${Number(row.contribution).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-      <td>${Number(row.growth).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-    </tr>`;
-  });
-  output += "</table>";
+	output += "<h3>Accumulation Phase</h3>";
+	output += "<table border='1'><tr><th>Year</th><th>Age</th><th>Fund (£)</th><th>Contribution (£)</th><th>Growth (£)</th></tr>";
+	accumulation.forEach(row => {
+	  output += `<tr>
+		<td>${row.year}</td>
+		<td>${row.age}</td>
+		<td>${Number(row.fund).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+		<td>${Number(row.contribution).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+		<td>${Number(row.growth).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+	  </tr>`;
+	});
+	output += "</table>";
+
 
   // Drawdown table
   output += "<h3>Drawdown Phase</h3>";

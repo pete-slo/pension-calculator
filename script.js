@@ -130,6 +130,12 @@ document.getElementById('calc-form').addEventListener('submit', async function (
         note: "At age 89, you may take the remaining balance as a lump sum."
       });
     }
+    
+  
+    fund = startBalance - amount + growth;
+  
+    if (amount === startBalance) break; // final withdrawal year
+  }
   
 
   // -----------------

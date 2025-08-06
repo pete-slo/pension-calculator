@@ -185,7 +185,7 @@ accumulation.forEach(row => {
   
 
 	output += "<h3>Drawdown Phase</h3>";
-  output += "<table class='drawdown-table' border='1'><tr><th class='year'>Year</th><th class='age'>Age</th><th class='balance'>Balance at Start (CI$)</th><th class='percentage'>Max %</th><th class='drawdown'>Max Drawdown (CI$)</th><th class='growth'>Growth (CI$)</th></tr>";
+  output += "<table class='drawdown-table' border='1'><tr><th class='year'>Year</th><th class='age'>Age</th><th class='balance'>Balance at Start (CI$)</th><th class='percentage' title='The maximum percentage of your pension fund that may be withdrawn at the age you reach this year.'>Max %</th><th class='drawdown'>Max Drawdown (CI$)</th><th class='growth'>Growth (CI$)</th></tr>";
   drawdown.forEach(row => {
     if (row.note) {
       output += `<tr class="drawdown-note"><td colspan="6">${row.note}</td></tr>`;

@@ -177,3 +177,16 @@ table tr:nth-child(odd) {
   max-width: 850px;
   margin-top: 20px;
 }
+
+/* Fade-in animation for results */
+#results {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+}
+
+#results.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+

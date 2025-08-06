@@ -171,17 +171,23 @@ document.getElementById('calc-form').addEventListener('submit', async function (
 
   const resultsDiv = document.getElementById('results');
 
-  // Set HTML and trigger fade-in
-  resultsDiv.innerHTML = output;
-  resultsDiv.classList.remove('fade-in'); // reset animation if re-calculating
-  void resultsDiv.offsetWidth; // reflow trick to restart animation
-  resultsDiv.classList.add('fade-in');
+    // Reset state
+  resultsDiv.classList.remove('show');
   
-  // Smooth scroll to results
+  // Set HTML
+  resultsDiv.innerHTML = output;
+  
+  // Allow browser to register the removal before adding again
+  setTimeout(() => {
+    resultsDiv.classList.add('show');
+  }, 50);
+  
+  // Smooth scroll
   resultsDiv.scrollIntoView({
     behavior: 'smooth',
     block: 'start'
   });
+  
   
 
 });

@@ -25,7 +25,7 @@ document.getElementById('calc-form').addEventListener('submit', async function (
   const growthRate = parseFloat(document.getElementById('growthRate').value) / 100;
   const roi = parseFloat(document.getElementById('roi').value) / 100; // Return on investment %
 
-  const lifeExpectancy = 90;
+  const lifeExpectancy = 100;
 
   // Load Cayman drawdown rules
   const drawdownTable = await loadDrawdownTable();
@@ -91,7 +91,7 @@ document.getElementById('calc-form').addEventListener('submit', async function (
 
   // Accumulation table
 	output += "<h3>Accumulation Phase</h3>";
-	output += "<table border='1'><tr><th>Year</th><th>Age</th><th>Fund (£)</th><th>Contribution (£)</th><th>Growth (£)</th></tr>";
+	output += "<table border='1'><tr><th>Year</th><th>Age</th><th>Fund (ï¿½)</th><th>Contribution (ï¿½)</th><th>Growth (ï¿½)</th></tr>";
 	accumulation.forEach(row => {
 	  output += `<tr>
 		<td class="centered">${row.year}</td>
@@ -108,7 +108,7 @@ document.getElementById('calc-form').addEventListener('submit', async function (
   // Drawdown table
   
 	output += "<h3>Drawdown Phase</h3>";
-	output += "<table border='1'><tr><th>Year</th><th>Age</th><th>Balance at Start (£)</th><th>%</th><th>Max Drawdown (£)</th><th>Growth (£)</th></tr>";
+	output += "<table border='1'><tr><th>Year</th><th>Age</th><th>Balance at Start (ï¿½)</th><th>%</th><th>Max Drawdown (ï¿½)</th><th>Growth (ï¿½)</th></tr>";
 	drawdown.forEach(row => {
 	  output += `<tr>
 		<td class="centered">${row.year}</td>

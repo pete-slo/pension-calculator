@@ -249,3 +249,9 @@ table tr:nth-child(odd) {
   text-align: right;
   width: 60px;
 }
+
+.drawdown-note {
+  background-color: #fff6d5; /* light yellow */
+  font-style: italic;
+  text-align: center;
+}

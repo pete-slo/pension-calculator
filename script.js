@@ -14,12 +14,52 @@ async function loadDrawdownTable() {
   return table;
 }
 
+// Custom arrow increment for Pension Fund
+const fundInput = document.getElementById('fund');
+fundInput.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    this.value = (parseFloat(this.value) || 0) + 10000;
+  }
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    this.value = Math.max((parseFloat(this.value) || 0) - 10000, 0);
+  }
+});
+
+// Custom arrow increment for Annual Contribution
+const contributionInput = document.getElementById('contribution');
+contributionInput.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    this.value = (parseFloat(this.value) || 0) + 1000;
+  }
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    this.value = Math.max((parseFloat(this.value) || 0) - 1000, 0);
+  }
+});
+
+
 document.getElementById('calc-form').addEventListener('submit', async function (e) {
   e.preventDefault();
 
   // Inputs
   const age = parseInt(document.getElementById('age').value);
   const retirementAge = parseInt(document.getElementById('retirementAge').value);
+
+  // Validation checks
+  if (retirementAge <= age) {
+    alert("Retirement age must be greater than your current age.");
+    return; // stop calculation
+  }
+
+  if (retirementAge < 50 || retirementAge > 79) {
+    alert("Retirement age must be between 50 and 79.");
+    return; // stop calculation
+  }
+
+
   let fund = parseFloat(document.getElementById('fund').value);
   let contribution = parseFloat(document.getElementById('contribution').value);
   const growthRate = parseFloat(document.getElementById('growthRate').value) / 100;
@@ -89,9 +129,11 @@ document.getElementById('calc-form').addEventListener('submit', async function (
   // -----------------
   let output = "<h2>Results</h2>";
 
+
   // Accumulation table
+
 	output += "<h3>Accumulation Phase</h3>";
-	output += "<table border='1'><tr><th>Year</th><th>Age</th><th>Fund (�)</th><th>Contribution (�)</th><th>Growth (�)</th></tr>";
+	output += "<table border='1'><tr><th>Year</th><th>Age</th><th>Fund (CI$)</th><th>Contribution (CI$)</th><th>Growth (CI$)</th></tr>";
 	accumulation.forEach(row => {
 	  output += `<tr>
 		<td class="centered">${row.year}</td>
@@ -108,7 +150,7 @@ document.getElementById('calc-form').addEventListener('submit', async function (
   // Drawdown table
   
 	output += "<h3>Drawdown Phase</h3>";
-	output += "<table border='1'><tr><th>Year</th><th>Age</th><th>Balance at Start (�)</th><th>%</th><th>Max Drawdown (�)</th><th>Growth (�)</th></tr>";
+	output += "<table border='1'><tr><th>Year</th><th>Age</th><th>Balance at Start (CI$)</th><th>%</th><th>Max Drawdown (CI$)</th><th>Growth (�)</th></tr>";
 	drawdown.forEach(row => {
 	  output += `<tr>
 		<td class="centered">${row.year}</td>

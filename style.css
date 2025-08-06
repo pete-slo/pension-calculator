@@ -19,10 +19,20 @@ form {
 
 .form-row {
   display: grid;
-  grid-template-columns: 250px 1fr; /* wider left column for consistent label+input width */
-  align-items: start;
-  margin-bottom: 14px;
-  column-gap: 20px; /* spacing between input and help text */
+  grid-template-columns: 250px 1fr;
+  align-items: center;   /* vertically center field + help text */
+  margin-bottom: 0;      /* we'll handle spacing in padding */
+  column-gap: 20px;
+  padding: 10px 0;       /* space inside each row */
+}
+
+/* Alternating background colours */
+.form-row:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.form-row:nth-child(odd) {
+  background-color: #ffffff;
 }
 
 .form-field label {

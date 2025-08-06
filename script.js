@@ -15,7 +15,6 @@ async function loadDrawdownTable() {
 }
 
 function addCustomStepSpinner(input, stepSize) {
-  // Keyboard arrow keys
   input.addEventListener('keydown', function (e) {
     const current = parseFloat(this.value) || 0;
     if (e.key === 'ArrowUp') {
@@ -28,16 +27,20 @@ function addCustomStepSpinner(input, stepSize) {
     }
   });
 
-  // Spinner click (triggered as input event)
-  input.addEventListener('input', function () {
-    if (!this.matches(':focus')) {
+  // Spinner click fallback (some browsers fire input instead of keydown)
+  input.addEventListener('wheel', function (e) {
+    if (document.activeElement === this) {
+      e.preventDefault();
+      const delta = Math.sign(e.deltaY);
       const current = parseFloat(this.value) || 0;
-      const rounded = Math.round(current / stepSize) * stepSize;
-      this.value = rounded;
+      this.value = delta < 0
+        ? current + stepSize
+        : Math.max(current - stepSize, 0);
     }
   });
 }
 
+// Apply to fields
 addCustomStepSpinner(document.getElementById('fund'), 10000);
 addCustomStepSpinner(document.getElementById('contribution'), 1000);
 

@@ -94,8 +94,8 @@ document.getElementById('calc-form').addEventListener('submit', async function (
 	output += "<table border='1'><tr><th>Year</th><th>Age</th><th>Fund (£)</th><th>Contribution (£)</th><th>Growth (£)</th></tr>";
 	accumulation.forEach(row => {
 	  output += `<tr>
-		<td>${row.year}</td>
-		<td>${row.age}</td>
+		<td class="centered">${row.year}</td>
+		<td class="centered">${row.age}</td>
 		<td>${Number(row.fund).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
 		<td>${Number(row.contribution).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
 		<td>${Number(row.growth).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
@@ -104,14 +104,15 @@ document.getElementById('calc-form').addEventListener('submit', async function (
 	output += "</table>";
 
 
+
   // Drawdown table
   
 	output += "<h3>Drawdown Phase</h3>";
 	output += "<table border='1'><tr><th>Year</th><th>Age</th><th>Balance at Start (£)</th><th>%</th><th>Max Drawdown (£)</th><th>Growth (£)</th></tr>";
 	drawdown.forEach(row => {
 	  output += `<tr>
-		<td>${row.year}</td>
-		<td>${row.age}</td>
+		<td class="centered">${row.year}</td>
+		<td class="centered">${row.age}</td>
 		<td>${Number(row.balance).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
 		<td>${row.percentage}</td>
 		<td>${Number(row.drawdown).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
@@ -119,6 +120,7 @@ document.getElementById('calc-form').addEventListener('submit', async function (
 	  </tr>`;
 	});
 	output += "</table>";
+
 
 
   document.getElementById('results').innerHTML = output;

@@ -57,14 +57,14 @@ table tr:nth-child(odd) {
 }
 
 table {
-  width: 800px;              /* Fixed sensible width */
-  margin: 20px auto;         /* Center table horizontally */
+  width: 800px;              /* Fixed width for all tables */
+  margin: 20px 0;            /* Top/bottom spacing, left aligned */
   border-collapse: collapse;
 }
 
 table th, table td {
   padding: 6px 8px;
-  text-align: right;
+  text-align: right;         /* Keep numbers right aligned for readability */
 }
 
 table th {
@@ -75,3 +75,7 @@ table th {
 table tr:nth-child(even) {
   background-color: #f9f9f9;
 }
+.centered {
+  text-align: center;
+}
+

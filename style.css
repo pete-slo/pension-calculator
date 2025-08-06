@@ -250,8 +250,8 @@ table tr:nth-child(odd) {
   width: 60px;
 }
 
-.drawdown-note {
-  background-color: #fff6d5; /* light yellow */
+tr.drawdown-note td {
+  background-color: #fff6d5 !important;
   font-style: italic;
   text-align: center;
 }

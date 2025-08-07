@@ -234,6 +234,7 @@ accumulation.forEach(row => {
 
 
 // Load and show ROI options
+
 document.getElementById('select-roi').addEventListener('click', async () => {
   const modal = document.getElementById('roiModal');
   const list = document.getElementById('roiOptions');
@@ -241,30 +242,52 @@ document.getElementById('select-roi').addEventListener('click', async () => {
 
   const response = await fetch('pension-returns.csv');
   const text = await response.text();
-  const rows = text.trim().split('\n').slice(1); // skip header
+  const rows = text.trim().split('\n');
+  const headers = rows[0].split(',').map(h => h.trim()); // ["description", "5yr", "10yr"]
+  const dataRows = rows.slice(1);
 
-  rows.forEach(row => {
-    const [desc, rate] = row.split(',').map(s => s.trim());
-    const li = document.createElement('li');
-    li.textContent = `${desc} – ${rate}%`;
-    li.addEventListener('click', () => {
-      document.getElementById('roi').value = rate;
-      modal.style.display = 'none';
-    });
-    list.appendChild(li);
+  const plans = dataRows.map(row => {
+    const cols = row.split(',').map(v => v.trim());
+    return {
+      description: cols[0],
+      '5yr': parseFloat(cols[1]),
+      '10yr': parseFloat(cols[2])
+    };
   });
 
+  function renderList(duration) {
+    list.innerHTML = ''; // Clear previous
+    plans.forEach(plan => {
+      const li = document.createElement('li');
+      li.innerHTML = `<span>${plan.description}</span><strong>${plan[duration]}%</strong>`;
+      li.addEventListener('click', () => {
+        document.getElementById('roi').value = plan[duration];
+        modal.style.display = 'none';
+      });
+      list.appendChild(li);
+    });
+  }
+
+  // Initial render with default (5yr)
+  renderList('5yr');
   modal.style.display = 'block';
+
+  // Listen for duration toggle
+  document.querySelectorAll('input[name="roi-duration"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      renderList(radio.value);
+    });
+  });
 });
 
-// Close modal
+// Close modal on X or outside click
 document.querySelector('.close-modal').addEventListener('click', () => {
   document.getElementById('roiModal').style.display = 'none';
 });
-
 window.addEventListener('click', (e) => {
   const modal = document.getElementById('roiModal');
   if (e.target === modal) {
     modal.style.display = 'none';
   }
 });
+

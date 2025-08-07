@@ -103,17 +103,23 @@
   <link rel="stylesheet" href="style.css">
   
  
-  <!-- ROI Modal -->
-  
-  <div id="roiModal" class="modal">
+<!-- ROI Modal -->
+
+<div id="roiModal" class="modal">
 	<div class="modal-content">
 	  <span class="close-modal">&times;</span>
 	  <h3>Select a Pension Plan ROI</h3>
+  
+	  <div style="margin-bottom: 10px;">
+		<label><input type="radio" name="roi-duration" value="5yr" checked> 5-Year Return</label>
+		<label style="margin-left: 20px;"><input type="radio" name="roi-duration" value="10yr"> 10-Year Return</label>
+	  </div>
+  
 	  <ul id="roiOptions"></ul>
 	</div>
   </div>
   
-
+  
   <script>
 	function dismissInfoBox() {
 	  const box = document.getElementById('infoBox');

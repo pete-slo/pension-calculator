@@ -378,11 +378,14 @@ tr.drawdown-note td {
 }
 
 .modal-content li {
-  margin: 10px 0;
+  margin: 8px 0;
   padding: 10px;
   background: #f1f1f1;
   border-radius: 6px;
   cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .modal-content li:hover {

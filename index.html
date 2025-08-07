@@ -99,24 +99,25 @@
   <link rel="stylesheet" href="style.css">
   
   <script>
-
 	function dismissInfoBox() {
-		const box = document.getElementById('infoBox');
-		box.classList.add('fade-out');
-
-		// Scroll while fading
-		document.querySelector('.form-container').scrollIntoView({
-			behavior: 'smooth',
-			block: 'start'
-		});
-
-		// Wait for the transition to end
-		box.addEventListener('transitionend', () => {
-			box.style.display = 'none';
-		}, { once: true });
+	  const box = document.getElementById('infoBox');
+	
+	  // Start fade out
+	  box.classList.add('fade-out');
+	
+	  // Start scroll immediately (while box is fading)
+	  document.querySelector('.form-container').scrollIntoView({
+		behavior: 'smooth',
+		block: 'start'
+	  });
+	
+	  // Hide element *after* fade-out completes
+	  setTimeout(() => {
+		box.style.display = 'none';
+	  }, 1000); // Matches fade-out duration
 	}
-
-  </script>
+	</script>
+	
   
 </body>
 </html>

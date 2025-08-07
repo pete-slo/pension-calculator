@@ -280,14 +280,15 @@ document.getElementById('select-roi').addEventListener('click', async () => {
   });
 });
 
-// Close modal on X or outside click
-document.querySelector('.close-modal').addEventListener('click', () => {
-  document.getElementById('roiModal').style.display = 'none';
-});
-window.addEventListener('click', (e) => {
+// Close modal on X click
+document.addEventListener('click', (e) => {
   const modal = document.getElementById('roiModal');
-  if (e.target === modal) {
+  const isCloseButton = e.target.classList.contains('close-modal');
+  const isOutside = e.target === modal;
+
+  if (isCloseButton || isOutside) {
     modal.style.display = 'none';
   }
 });
+
 

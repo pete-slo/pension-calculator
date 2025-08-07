@@ -99,22 +99,24 @@
   <link rel="stylesheet" href="style.css">
   
   <script>
-  
-  function dismissInfoBox() {
-    const box = document.getElementById('infoBox');
-    box.classList.add('fade-out');
 
-    setTimeout(() => {
-      box.style.display = 'none';
-      document.querySelector('.form-container').scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
-    }, 1000); // Matches fade-out duration
-  }
-  
+	function dismissInfoBox() {
+		const box = document.getElementById('infoBox');
+		box.classList.add('fade-out');
+
+		// Scroll while fading
+		document.querySelector('.form-container').scrollIntoView({
+			behavior: 'smooth',
+			block: 'start'
+		});
+
+		// Wait for the transition to end
+		box.addEventListener('transitionend', () => {
+			box.style.display = 'none';
+		}, { once: true });
+	}
+
   </script>
-
   
 </body>
 </html>

@@ -180,7 +180,7 @@ table tr:nth-child(odd) {
   padding: 20px;
   border-radius: 6px;
   max-width: 800px;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 
@@ -318,4 +318,10 @@ tr.drawdown-note td {
 
 .close-button:hover {
   color: #000;
+}
+
+/* Fade-out transition */
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }

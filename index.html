@@ -18,7 +18,7 @@
   <h1>Cayman Islands Pension Calculator</h1>
  
  <div class="info-box" id="infoBox">
-  <button class="close-button" onclick="document.getElementById('infoBox').style.display='none'">×</button>
+  <button class="close-button" onclick="dismissInfoBox()">×</button>
   <p>
     This calculator will give you an illustration of how much income you may be able to receive from your Defined Contribution pension plan when you retire.
     Enter the figures applicable to your own situation to calculate how much you may be able to withdraw during each year of your retirement.
@@ -97,6 +97,24 @@
   
   <script src="script.js"></script>
   <link rel="stylesheet" href="style.css">
+  
+  <script>
+  
+  function dismissInfoBox() {
+    const box = document.getElementById('infoBox');
+    box.classList.add('fade-out');
+
+    setTimeout(() => {
+      box.style.display = 'none';
+      document.querySelector('.form-container').scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }, 300); // Matches fade-out duration
+  }
+  
+  </script>
+
   
 </body>
 </html>

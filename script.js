@@ -231,3 +231,40 @@ accumulation.forEach(row => {
   
 
 });
+
+
+// Load and show ROI options
+document.getElementById('select-roi').addEventListener('click', async () => {
+  const modal = document.getElementById('roiModal');
+  const list = document.getElementById('roiOptions');
+  list.innerHTML = '';
+
+  const response = await fetch('pension-returns.csv');
+  const text = await response.text();
+  const rows = text.trim().split('\n').slice(1); // skip header
+
+  rows.forEach(row => {
+    const [desc, rate] = row.split(',').map(s => s.trim());
+    const li = document.createElement('li');
+    li.textContent = `${desc} – ${rate}%`;
+    li.addEventListener('click', () => {
+      document.getElementById('roi').value = rate;
+      modal.style.display = 'none';
+    });
+    list.appendChild(li);
+  });
+
+  modal.style.display = 'block';
+});
+
+// Close modal
+document.querySelector('.close-modal').addEventListener('click', () => {
+  document.getElementById('roiModal').style.display = 'none';
+});
+
+window.addEventListener('click', (e) => {
+  const modal = document.getElementById('roiModal');
+  if (e.target === modal) {
+    modal.style.display = 'none';
+  }
+});

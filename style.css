@@ -375,12 +375,13 @@ tr.drawdown-note td {
 .modal-content {
   background-color: #fff;
   margin: 10% auto;
-  padding: 20px 30px;
+  padding: 20px;
   border: 1px solid #888;
-  width: 90%;
+  width: 100%;
   max-width: 500px;
   border-radius: 8px;
   position: relative;
+  box-sizing: border-box;  /* Ensure padding doesn't cause overflow */
 }
 
 .modal-content h3 {
@@ -414,4 +415,11 @@ tr.drawdown-note td {
   font-size: 24px;
   font-weight: bold;
   cursor: pointer;
+}
+
+@media (max-width: 480px) {
+  .modal-content {
+    margin: 5% 10px;
+    width: calc(100% - 20px);  /* fills screen minus side margin */
+  }
 }

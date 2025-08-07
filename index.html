@@ -102,21 +102,15 @@
 	function dismissInfoBox() {
 	  const box = document.getElementById('infoBox');
 	
-	  // Start fade out
-	  box.classList.add('fade-out');
+	  // Add a class that fades + collapses the box
+	  box.classList.add('hidden');
 	
-	  // Start scroll immediately (while box is fading)
-	  document.querySelector('.form-container').scrollIntoView({
-		behavior: 'smooth',
-		block: 'start'
-	  });
-	
-	  // Hide element *after* fade-out completes
-	  setTimeout(() => {
+	  // After the transition completes, optionally set display: none (to prevent tabbing etc.)
+	  box.addEventListener('transitionend', () => {
 		box.style.display = 'none';
-	  }, 1000); // Matches fade-out duration
+	  }, { once: true });
 	}
-	</script>
+  </script>
 	
   
 </body>

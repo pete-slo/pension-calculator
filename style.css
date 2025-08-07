@@ -325,3 +325,17 @@ tr.drawdown-note td {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
+
+#infoBox {
+  overflow: hidden;
+  transition: opacity 0.5s ease, max-height 0.5s ease, margin 0.5s ease;
+  opacity: 1;
+  max-height: 300px; /* Adjust as needed */
+  margin-bottom: 20px;
+}
+
+#infoBox.hidden {
+  opacity: 0;
+  max-height: 0;
+  margin-bottom: 0;
+}

@@ -126,6 +126,10 @@ document.getElementById('calc-form').addEventListener('submit', async function (
     let amount = Math.max(pctAmount, adjustedMinimum);
     let usedMinimum = amount === adjustedMinimum;
 
+    if (usedMinimum) {
+      anyMinimumApplied = true;
+    }
+
     let growth = roi * (startBalance - (amount / 2));
     if (amount >= startBalance) {
       amount = startBalance;
@@ -198,6 +202,7 @@ document.getElementById('calc-form').addEventListener('submit', async function (
     }
   }
   
+  let anyMinimumApplied = false;
 
 	output += "<h3>Drawdown Phase</h3>";
   output += "<table class='drawdown-table' border='1'><tr><th class='year'>Year</th><th class='age'>Age</th><th class='balance'>Balance at Start (CI$)</th><th class='percentage' title='The maximum percentage of your pension fund that may be withdrawn at the age you reach this year.'>Max %</th><th class='drawdown' title='The percentage of your pension fund, or the minimum annual amount ($15,400), whichever is greater.'>Annual Max (CI$)</th><th class='growth'>Growth (CI$)</th></tr>";
@@ -219,14 +224,14 @@ document.getElementById('calc-form').addEventListener('submit', async function (
 
   output += "</table>";
 
-  output += `
-  <p style="font-size: 0.9em; margin-top: -10px; max-width: 600px;">
-    <span class="legend-swatch min-used"></span>
-    Indicates the minimum withdrawal was applied, because the percentage of your remaining fund did not meet the minimum.
-  </p>
-
-`;
-
+  if (anyMinimumApplied) {
+    output += `
+    <p style="font-size: 0.9em; margin-top: -10px; max-width: 600px;">
+      <span class="legend-swatch min-used"></span>
+      Indicates that the year's estimated minimum withdrawal was applied. The estimate is based on inflation. The minimum was applied because the applicable percentage of your remaining fund did not meet the minimum.
+    </p>
+    `;
+  }
 
   output += `<div class="guidance ${guidanceClass}">${guidanceMessage}</div>`;
 

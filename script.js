@@ -110,6 +110,7 @@ document.getElementById('calc-form').addEventListener('submit', async function (
 
 
   let inflationMultiplier = Math.pow(1 + inflationRate, yearsUntilRetirement);
+  let anyMinimumApplied = false;
 
   for (let yr = retirementAge; yr < lifeExpectancy; yr++) {
     const rules = drawdownTable[yr];
@@ -202,8 +203,6 @@ document.getElementById('calc-form').addEventListener('submit', async function (
     }
   }
   
-  let anyMinimumApplied = false;
-
 	output += "<h3>Drawdown Phase</h3>";
   output += "<table class='drawdown-table' border='1'><tr><th class='year'>Year</th><th class='age'>Age</th><th class='balance'>Balance at Start (CI$)</th><th class='percentage' title='The maximum percentage of your pension fund that may be withdrawn at the age you reach this year.'>Max %</th><th class='drawdown' title='The percentage of your pension fund, or the minimum annual amount ($15,400), whichever is greater.'>Annual Max (CI$)</th><th class='growth'>Growth (CI$)</th></tr>";
   drawdown.forEach(row => {

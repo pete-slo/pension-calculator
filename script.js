@@ -216,10 +216,11 @@ document.getElementById('calc-form').addEventListener('submit', async function (
   output += "</table>";
 
   output += `
-  <p style="font-size: 0.9em; margin-top: -10px;">
-    <span class="min-used" style="display: inline-block; padding: 2px 6px;">&nbsp;</span>
-    &nbsp;Indicates the minimum withdrawal was applied, becasue the percentage of your remaining fund did not meet the minimum.
+  <p style="font-size: 0.9em; margin-top: -10px; max-width: 600px;">
+    <span class="legend-swatch min-used"></span>
+    Indicates the minimum withdrawal was applied, because the percentage of your remaining fund did not meet the minimum.
   </p>
+
 `;
 
 

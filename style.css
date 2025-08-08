@@ -430,3 +430,12 @@ tr.drawdown-note td {
   font-style: italic;
   background-color: #fff6f0 !important; 
 }
+
+.legend-swatch {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #000;
+  margin-right: 8px;
+  vertical-align: middle;
+}

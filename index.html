@@ -20,10 +20,10 @@
  <div class="info-box" id="infoBox">
   <button class="close-button" onclick="dismissInfoBox()">×</button>
   <p>
-    This calculator will give you an illustration of how much income you may be able to receive from your Defined Contribution pension plan when you retire.
+    This calculator provides an illustration of how much income you may be able to receive from your Defined Contribution pension plan when you retire.
     Enter the figures applicable to your own situation to calculate how much you may be able to withdraw during each year of your retirement.
     <br><br>
-    <strong>Note:</strong> This calculator provides only an illustration of the amount you may receive, and the actual amount may vary considerably.
+    <strong>Note:</strong> This calculator makes several assumptions and provides <strong>only an illustration</strong> of the amount you may receive, and the actual amount may vary considerably.
     You should check your retirement savings on a regular basis to ensure that you have sufficient income when you retire.
   </p>
 </div>
@@ -60,7 +60,14 @@
 		</div>
 		<div class="help-text">Expected annual investment return on your pension fund. 3%-4% is conservative. 7% or more is aggressive (0% to 10%)</div>
 	  </div>
-	  
+
+	  <div class="form-row">
+		<div class="form-field">
+		  <label for="inflation">Inflation Rate (%)</label>
+		  <input type="number" step="0.1" id="inflation" value="3" min="0" max="5" inputmode='decimal' required>
+		</div>
+		<div class="help-text">Inflation reduces your spending power over time, but you can expect this to increase the minimum amount that can be withdrawn each year. (0% to 5%)</div>
+	  </div>
   
 	  <div class="form-row">
 		<div class="form-field">

@@ -423,3 +423,10 @@ tr.drawdown-note td {
     width: calc(100% - 20px);  /* fills screen minus side margin */
   }
 }
+
+/* for differentiating years where the minimum withdrawal has been applied */
+
+.min-used {
+  font-style: italic;
+  background-color: #fff6f0;
+}

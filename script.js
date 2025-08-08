@@ -70,6 +70,7 @@ document.getElementById('calc-form').addEventListener('submit', async function (
   let contribution = parseFloat(document.getElementById('contribution').value);
   const growthRate = parseFloat(document.getElementById('growthRate').value) / 100;
   const roi = parseFloat(document.getElementById('roi').value) / 100; // Return on investment %
+  const inflationRate = parseFloat(document.getElementById('inflation').value) / 100;
 
   const lifeExpectancy = 100;
 
@@ -99,48 +100,54 @@ document.getElementById('calc-form').addEventListener('submit', async function (
   // Drawdown phase
   // -----------------
 
+  const BASE_MINIMUM = 15400;
 	let drawdown = [];
-	for (let yr = retirementAge; yr < lifeExpectancy; yr++) {
+
+
+
+  let inflationMultiplier = 1;
+
+  for (let yr = retirementAge; yr < lifeExpectancy; yr++) {
     const rules = drawdownTable[yr];
     if (!rules) break;
-  
-    if (fund <= 0) break; // stop immediately if no funds remain
-  
+    if (fund <= 0) break;
+
     const startBalance = fund;
     const pctAmount = startBalance * rules.percentage;
-  
-    // Calculate allowed drawdown (capped at available funds)
-    let amount = Math.max(pctAmount, rules.minimum);
+
+    // Apply inflation to minimum
+    let adjustedMinimum = BASE_MINIMUM * inflationMultiplier;
+    inflationMultiplier *= (1 + inflationRate); // compound yearly
+
+    let amount = Math.max(pctAmount, adjustedMinimum);
+    let usedMinimum = amount === adjustedMinimum;
+
     let growth = roi * (startBalance - (amount / 2));
-  
-    // If taking all remaining funds, no growth applies and stop afterwards
     if (amount >= startBalance) {
       amount = startBalance;
       growth = 0;
     }
-  
+
     drawdown.push({
       year: (new Date().getFullYear() + (yr - age)),
       age: yr,
       balance: startBalance.toFixed(2),
       percentage: (rules.percentage * 100).toFixed(2),
       drawdown: amount.toFixed(2),
-      growth: growth.toFixed(2)
+      growth: growth.toFixed(2),
+      usedMinimum: usedMinimum  // track this for display
     });
-    
-    // Insert special note row at age 89 if funds remain
+
     if (yr === 89 && fund > 0) {
       drawdown.push({
         note: "At age 89, you may take the remaining balance as a lump sum."
       });
     }
-    
-  
+
     fund = startBalance - amount + growth;
-  
-    if (amount === startBalance) break; // final withdrawal year
+    if (amount === startBalance) break;
   }
-  
+
 
   // -----------------
   // Output results
@@ -153,7 +160,7 @@ document.getElementById('calc-form').addEventListener('submit', async function (
  
 	output += "<h3>Accumulation Phase</h3>";
   output += "<table class='accumulation-table' border='1'><tr><th class='year'>Year</th><th class='age'>Age</th><th class='fund'>Fund (CI$)</th><th class='contribution'>Contribution (CI$)</th><th class='growth'>Growth (CI$)</th></tr>";
-accumulation.forEach(row => {
+  accumulation.forEach(row => {
 	  output += `<tr>
     <td class="year centered">${row.year}</td>
     <td class="age centered">${row.age}</td>
@@ -194,7 +201,8 @@ accumulation.forEach(row => {
     if (row.note) {
       output += `<tr class="drawdown-note"><td colspan="6">${row.note}</td></tr>`;
     } else {
-      output += `<tr>
+      const rowClass = row.usedMinimum ? 'min-used' : '';
+      output += `<tr class="${rowClass}">
         <td class="year centered">${row.year}</td>
         <td class="age centered">${row.age}</td>
         <td class="balance">${Number(row.balance).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
@@ -206,6 +214,14 @@ accumulation.forEach(row => {
   });
 
   output += "</table>";
+
+  output += `
+  <p style="font-size: 0.9em; margin-top: -10px;">
+    <span class="min-used" style="display: inline-block; padding: 2px 6px;">&nbsp;</span>
+    &nbsp;Indicates the minimum withdrawal was applied, becasue the percentage of your remaining fund did not meet the minimum.
+  </p>
+`;
+
 
   output += `<div class="guidance ${guidanceClass}">${guidanceMessage}</div>`;
 

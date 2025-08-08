@@ -72,6 +72,10 @@ document.getElementById('calc-form').addEventListener('submit', async function (
   const roi = parseFloat(document.getElementById('roi').value) / 100; // Return on investment %
   const inflationRate = parseFloat(document.getElementById('inflation').value) / 100;
 
+  const currentYear = new Date().getFullYear();
+  const yearsUntilRetirement = retirementAge - age;
+
+
   const lifeExpectancy = 100;
 
   // Load Cayman drawdown rules
@@ -105,7 +109,7 @@ document.getElementById('calc-form').addEventListener('submit', async function (
 
 
 
-  let inflationMultiplier = 1;
+  let inflationMultiplier = Math.pow(1 + inflationRate, yearsUntilRetirement);
 
   for (let yr = retirementAge; yr < lifeExpectancy; yr++) {
     const rules = drawdownTable[yr];
